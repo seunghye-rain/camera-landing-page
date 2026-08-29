@@ -63,8 +63,9 @@
   .spec-item dd { margin:0; flex:1; font-size:14px; line-height:1.62; color:var(--cream); }
 
   /* Section 02 */
-  .mood-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:8px; }
-  .mood-card { position:relative; width:100%; min-width:0; height:auto; aspect-ratio:2 / 3; border-radius:13px; perspective:1200px; appearance:none; -webkit-appearance:none; }
+  /* Figma 540:2080 — 428px mobile viewport: 388px content width, 190 × 250px cards. */
+  .mood-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:8px; }
+  .mood-card { position:relative; width:100%; min-width:0; height:250px; border-radius:13px; perspective:1200px; appearance:none; -webkit-appearance:none; }
   .mood-inner { position:absolute; inset:0; transform-style:preserve-3d; transition:transform .6s cubic-bezier(.2,.7,.2,1); }
   .mood-card.is-flipped .mood-inner { transform:rotateY(180deg); }
   .mood-face { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden; padding:16px; border-radius:13px; backface-visibility:hidden; background:#333; text-align:left; }
