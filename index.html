@@ -728,8 +728,7 @@
         gap: 10px;
         width: 100%;
       }
-      .save-btn,
-      .btn-outline {
+      .save-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -746,19 +745,7 @@
         color: #0c0d0e;
         background: var(--lime);
       }
-      .btn-outline {
-        border: 1px solid var(--border);
-        color: var(--cream);
-        transition:
-          0.2s border-color,
-          0.2s background;
-      }
-      .btn-outline:hover {
-        border-color: var(--lime);
-        background: rgba(216, 239, 80, 0.08);
-      }
-      .save-btn svg,
-      .btn-outline svg {
+      .save-btn svg {
         width: 15px;
         height: 15px;
         fill: none;
@@ -1150,11 +1137,6 @@
                   /></svg
                 >#dazzcam으로 공유하기
               </button>
-              <button class="btn-outline" id="saveButton" type="button">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 3v12m0 0-4-4m4 4 4-4M5 19h14" /></svg
-                >폴라로이드 저장하기
-              </button>
             </div>
             <p class="result-status" id="resultStatus" aria-live="polite">
               먼저 여름 무드를 골라주세요.
@@ -1244,7 +1226,6 @@
         const resultMoodName = document.getElementById("resultMoodName");
         const resultStatus = document.getElementById("resultStatus");
         const fileInput = document.getElementById("photoInput");
-        const saveButton = document.getElementById("saveButton");
         const shareButton = document.getElementById("shareButton");
         const polaroidWrap = document.getElementById("polaroidWrap");
         const polaroid = document.getElementById("polaroid");
@@ -1376,8 +1357,7 @@
           dclassic: "contrast(1.15) saturate(1.25) sepia(.2) brightness(.96)",
           ct2f: "contrast(.92) saturate(.86) sepia(.18) brightness(1.08) hue-rotate(8deg)",
         };
-        // Shared by saveButton and shareButton so the polaroid PNG is only
-        // ever built in one place.
+        // Build the same PNG used by the sharing flow.
         function renderPolaroidCanvas() {
           return new Promise((resolve, reject) => {
             if (!uploadedDataUrl || !activeMood) {
@@ -1401,7 +1381,11 @@
               const photoH = isPortrait ? 1100 : photoW / photoRatio;
               const h = isPortrait ? 1600 : photoH / 0.729;
               const padTop = isPortrait ? 96 : h * 0.083;
-              const captionY = isPortrait ? 1450 : h * 0.9163;
+              const captionX = isPortrait ? 800 : 1230;
+              const captionY = isPortrait ? 1425 : h * 0.906;
+              const dateFontSize = isPortrait ? 42 : 32;
+              const hashtagFontSize = isPortrait ? 28 : 22;
+              const captionGap = isPortrait ? 46 : 34;
               canvas.width = w;
               canvas.height = h;
               const ctx = canvas.getContext("2d");
@@ -1437,18 +1421,19 @@
               ctx.restore();
               ctx.fillStyle = "rgba(16,34,26,.16)";
               ctx.fillRect(padX, padTop, photoW, photoH);
-              ctx.font = "700 20px -apple-system, sans-serif";
+              ctx.font = `800 ${dateFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+              ctx.fillStyle = "rgba(51,55,46,.76)";
               ctx.fillText(
                 `DAZZ / ${date.getFullYear()}`,
-                isPortrait ? 815 : 1270,
+                captionX,
                 captionY,
               );
-              ctx.font = "700 14px -apple-system, sans-serif";
-              ctx.fillStyle = "rgba(51,55,46,.65)";
+              ctx.font = `800 ${hashtagFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+              ctx.fillStyle = "rgba(51,55,46,.68)";
               ctx.fillText(
                 "#MyDazzSummer",
-                isPortrait ? 815 : 1270,
-                captionY + (isPortrait ? 20 : 26),
+                captionX,
+                captionY + captionGap,
               );
               resolve(canvas);
             };
@@ -1466,19 +1451,6 @@
 
         const SHARE_TEXT =
           "이번 여름을 나만의 필름으로 남겨봤어요.\n#dazzcam #MyDazzSummer";
-
-        saveButton.addEventListener("click", async () => {
-          if (!uploadedDataUrl || !activeMood) return;
-          try {
-            const canvas = await renderPolaroidCanvas();
-            downloadCanvas(canvas);
-            resultStatus.textContent =
-              "폴라로이드를 저장했어요. #dazzcam #MyDazzSummer와 함께 공유해보세요.";
-          } catch (err) {
-            resultStatus.textContent =
-              "저장 중 문제가 생겼어요. 다시 시도해주세요.";
-          }
-        });
 
         if (shareButton) {
           shareButton.addEventListener("click", async () => {
