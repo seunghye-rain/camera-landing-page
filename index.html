@@ -925,11 +925,46 @@
         <div class="moment-finder" aria-label="여름 사진 키워드 선택">
           <p>어떤 순간을 남기고 싶나요?</p>
           <div class="moment-tags">
-            <button class="moment-tag" type="button" data-mood-target="classic" aria-pressed="false">#푸른하늘</button>
-            <button class="moment-tag" type="button" data-mood-target="cpm" aria-pressed="false">#여름여행</button>
-            <button class="moment-tag" type="button" data-mood-target="dclassic" aria-pressed="false">#해질녘</button>
-            <button class="moment-tag" type="button" data-mood-target="ct2f" aria-pressed="false">#밤산책</button>
-            <button class="moment-tag" type="button" data-mood-target="cpm" aria-pressed="false">#플래시사진</button>
+            <button
+              class="moment-tag"
+              type="button"
+              data-mood-target="classic"
+              aria-pressed="false"
+            >
+              #푸른하늘
+            </button>
+            <button
+              class="moment-tag"
+              type="button"
+              data-mood-target="cpm"
+              aria-pressed="false"
+            >
+              #여름여행
+            </button>
+            <button
+              class="moment-tag"
+              type="button"
+              data-mood-target="dclassic"
+              aria-pressed="false"
+            >
+              #해질녘
+            </button>
+            <button
+              class="moment-tag"
+              type="button"
+              data-mood-target="ct2f"
+              aria-pressed="false"
+            >
+              #밤산책
+            </button>
+            <button
+              class="moment-tag"
+              type="button"
+              data-mood-target="cpm"
+              aria-pressed="false"
+            >
+              #플래시사진
+            </button>
           </div>
         </div>
         <a class="hero-cta" href="#moods">내 사진에 맞는 필름 찾기</a>
@@ -1003,8 +1038,8 @@
           <span class="kicker mono">02&nbsp;&nbsp;MATCH YOUR MOMENT</span>
           <h2>키워드에 맞는 필름을 골라보세요</h2>
           <p class="body">
-            같은 여름 사진도 원하는 장면에 따라 달라져요.<br />태그를 보고
-            내 사진에 가장 잘 맞는 결과를 선택해보세요.
+            같은 여름 사진도 원하는 장면에 따라 달라져요.<br />태그를 보고 내
+            사진에 가장 잘 맞는 결과를 선택해보세요.
           </p>
         </div>
         <div class="shell mood-grid" id="moodGrid">
@@ -1053,7 +1088,8 @@
                 /><span class="mood-pick">MOMENT PICK</span
                 ><span class="mood-number">02 / GREEN FLASH</span
                 ><span class="mood-name">CPM35</span
-                ><span class="mood-hashes front">#여름여행 #플래시사진 #빈티지그레인</span
+                ><span class="mood-hashes front"
+                  >#여름여행 #플래시사진 #빈티지그레인</span
                 ><span class="mood-tap">이 필름 선택하기</span></span
               >
               <span class="mood-face mood-back"
@@ -1082,7 +1118,8 @@
                 /><span class="mood-pick">MOMENT PICK</span
                 ><span class="mood-number">03 / CITY FILM</span
                 ><span class="mood-name">D Classic</span
-                ><span class="mood-hashes front">#해질녘 #따뜻한 #레트로무드</span
+                ><span class="mood-hashes front"
+                  >#해질녘 #따뜻한 #레트로무드</span
                 ><span class="mood-tap">이 필름 선택하기</span></span
               >
               <span class="mood-face mood-back"
@@ -1111,7 +1148,8 @@
                 /><span class="mood-pick">MOMENT PICK</span
                 ><span class="mood-number">04 / FADED DAY</span
                 ><span class="mood-name">CT2F</span
-                ><span class="mood-hashes front">#밤산책 #몽글한 #꿈같은기억</span
+                ><span class="mood-hashes front"
+                  >#밤산책 #몽글한 #꿈같은기억</span
                 ><span class="mood-tap">이 필름 선택하기</span></span
               >
               <span class="mood-face mood-back"
@@ -1220,7 +1258,7 @@
             href="https://apps.apple.com/kr/app/dazz-cam-vintage-camera/id1422471180"
             target="_blank"
             rel="noopener noreferrer"
-            >Dazz Pro에서 더 많은 필름 보기</a
+            >Dazz Pro에서 더 많은 필름 경험하기</a
           >
         </aside>
       </section>
@@ -1325,7 +1363,9 @@
             card.classList.remove("is-flipped");
             card.setAttribute("aria-pressed", "false");
           });
-          momentTags.forEach((tag) => tag.setAttribute("aria-pressed", "false"));
+          momentTags.forEach((tag) =>
+            tag.setAttribute("aria-pressed", "false"),
+          );
           panel.classList.remove("is-active");
           statusText.textContent = "먼저 여름 무드를 골라주세요.";
           if (!uploadedDataUrl) {
@@ -1346,7 +1386,10 @@
             card.setAttribute("aria-pressed", String(selected));
           });
           momentTags.forEach((tag) => {
-            tag.setAttribute("aria-pressed", String(tag.dataset.moodTarget === key));
+            tag.setAttribute(
+              "aria-pressed",
+              String(tag.dataset.moodTarget === key),
+            );
           });
           panel.classList.add("is-active");
           statusText.innerHTML = `선택한 무드: <b>${mood.name}</b>`;
@@ -1492,18 +1535,10 @@
               ctx.fillRect(padX, padTop, photoW, photoH);
               ctx.font = `800 ${dateFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
               ctx.fillStyle = "rgba(51,55,46,.76)";
-              ctx.fillText(
-                `DAZZ / ${date.getFullYear()}`,
-                captionX,
-                captionY,
-              );
+              ctx.fillText(`DAZZ / ${date.getFullYear()}`, captionX, captionY);
               ctx.font = `800 ${hashtagFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
               ctx.fillStyle = "rgba(51,55,46,.68)";
-              ctx.fillText(
-                "#MyDazzSummer",
-                captionX,
-                captionY + captionGap,
-              );
+              ctx.fillText("#MyDazzSummer", captionX, captionY + captionGap);
               resolve(canvas);
             };
             image.onerror = () => reject(new Error("image load failed"));
