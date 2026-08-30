@@ -364,10 +364,14 @@
       .mood-inner {
         position: absolute;
         inset: 0;
+        -webkit-transform-style: preserve-3d;
         transform-style: preserve-3d;
+        -webkit-transition: -webkit-transform 0.6s
+          cubic-bezier(0.2, 0.7, 0.2, 1);
         transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
       }
       .mood-card.is-flipped .mood-inner {
+        -webkit-transform: rotateY(180deg);
         transform: rotateY(180deg);
       }
       .mood-face {
@@ -379,7 +383,12 @@
         overflow: hidden;
         padding: 16px;
         border-radius: 13px;
+        -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+        /* Safari needs each card face on its own 3D layer. Without this,
+           the reverse side can remain visible after a tap. */
+        -webkit-transform: translateZ(1px);
+        transform: translateZ(1px);
         background: #333;
         text-align: left;
       }
@@ -450,7 +459,8 @@
         align-items: flex-start;
         color: #0c0d0e;
         background: var(--lime);
-        transform: rotateY(180deg);
+        -webkit-transform: rotateY(180deg) translateZ(1px);
+        transform: rotateY(180deg) translateZ(1px);
       }
       .mood-back:after {
         display: none;
@@ -654,21 +664,21 @@
         height: 100%;
         pointer-events: none;
       }
-.polaroid-caption {
-  position: absolute;
-  z-index: 3;
-  left: auto;
-  right: 12%;
-  bottom: 5.5%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
-.polaroid.is-portrait .polaroid-caption {
-  left: auto;
-  right: 12%;
-  bottom: 8%;
-}
+      .polaroid-caption {
+        position: absolute;
+        z-index: 3;
+        left: auto;
+        right: 12%;
+        bottom: 5.5%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+      .polaroid.is-portrait .polaroid-caption {
+        left: auto;
+        right: 12%;
+        bottom: 8%;
+      }
       .polaroid-caption small {
         font: 700 8px var(--sans);
         letter-spacing: 0.1em;
@@ -919,10 +929,13 @@
       <section class="strip">
         <div class="shell section-head">
           <span class="kicker">01&nbsp;&nbsp;SUMMER FILM WEEK</span>
-          <h2>여름을 다시 꺼내보는 가장 간단한 방법</h2>
+          <h2>
+            여름을 추억할 수 있는<br />
+            가장 간단한 방법
+          </h2>
           <p class="body">
-            여러분의 여름을 가장 잘 나타내는 사진이 있나요?<br />네 가지 Dazz 무드 중 하나를 골라<br />필름
-            한 장으로 추억해보세요
+            여러분의 여름을 가장 잘 나타내는 사진이 있나요?<br />네 가지 Dazz
+            무드 중 하나를 골라<br />필름 한 장으로 추억해보세요
           </p>
         </div>
         <div class="shell promo-steps">
@@ -955,7 +968,7 @@
           <span class="kicker mono">02&nbsp;&nbsp;CHOOSE YOUR SUMMER</span>
           <h2>나의 여름은 어떤 색이었나요?</h2>
           <p class="body">
-            청량했던 오후부터 빛바랜 저녁까지.<br />가장 닮은 한 장을 골라 내
+            청량했던 오후부터 빛바랜 저녁까지.<br />추억 한 장을 골라 내
             사진으로 직접 만나보세요.
           </p>
         </div>
@@ -1078,10 +1091,8 @@
       <section class="strip" id="film-it">
         <div class="shell section-head">
           <span class="kicker mono">03&nbsp;&nbsp;TRY IT ON YOUR PHOTO</span>
-          <h2>이번 여름의 사진 한 장을 골라주세요</h2>
-          <p class="body">
-            고른 카메라의 무드를<br />내 사진 한 장에 먼저 입혀볼게요.
-          </p>
+          <h2>이번 여름을 한 장 골라주세요</h2>
+          <p class="body">원하는 무드로<br />소중한 여름을 기록해드릴게요.</p>
         </div>
         <div class="shell film-panel" id="filmPanel">
           <div class="film-status-row">
@@ -1091,9 +1102,7 @@
             <a class="pick-mood-btn" href="#moods">무드 고르러 가기</a>
           </div>
           <div class="upload-box">
-            <p class="prompt">
-              카메라롤에서 가장 기억에 남는 여름 사진을 골라주세요.
-            </p>
+            <p class="prompt">가장 기억에 남는 여름 사진을 골라주세요.</p>
             <label class="upload-label" for="photoInput"
               >사진 한 장 무료 체험하기<input
                 id="photoInput"
@@ -1126,8 +1135,8 @@
                 alt=""
                 aria-hidden="true"
               />
-          <div class="polaroid-caption">
-            <span class="polaroid-meta"
+              <div class="polaroid-caption">
+                <span class="polaroid-meta"
                   ><small id="polaroidDate">DAZZ / 2026</small
                   ><small class="polaroid-hashtag">#MyDazzSummer</small></span
                 >
@@ -1428,7 +1437,7 @@
               ctx.restore();
               ctx.fillStyle = "rgba(16,34,26,.16)";
               ctx.fillRect(padX, padTop, photoW, photoH);
-        ctx.font = "700 20px -apple-system, sans-serif";
+              ctx.font = "700 20px -apple-system, sans-serif";
               ctx.fillText(
                 `DAZZ / ${date.getFullYear()}`,
                 isPortrait ? 815 : 1270,
